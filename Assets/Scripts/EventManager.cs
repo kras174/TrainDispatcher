@@ -7,8 +7,8 @@ public class EventManager : MonoBehaviour {
     public delegate void MainLogicEventHendler ();
 
     public static event MainLogicEventHendler TrafficLightEvent;
-    public static event MainLogicEventHendler WayPointEvent;
-    public static event MainLogicEventHendler PlatformEvent;
+    //public static event MainLogicEventHendler WayPointEvent;
+    //public static event MainLogicEventHendler PlatformEvent;
 
     public void TrafficLightLogic()
     {

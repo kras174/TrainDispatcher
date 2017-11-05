@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -22,7 +23,7 @@ public class TrainMove : MonoBehaviour
     void Awake()
     {
         wayPoints = GameObject.FindGameObjectWithTag("WayPoints").transform;
-        _randomWayPoint = Random.Range(1, 4);
+        _randomWayPoint = UnityEngine.Random.Range(1, 4);
         CurWayPoint = _randomWayPoint;
 
         functionState = 0;
@@ -78,10 +79,18 @@ public class TrainMove : MonoBehaviour
 
     private void OnTriggerExit(Collider collider)
     {
-        if (collider.tag == "TrafficLight")
+        try
         {
-            _currTrafficLight.GetComponent<TrafficLight>().LightHandler = 1;
-            _currTrafficLight = null;
+            if (collider.tag == "TrafficLight")
+            {
+                _currTrafficLight.GetComponent<TrafficLight>().LightHandler = 1;
+                _currTrafficLight = null;
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.Log("Эта грёбанная ошибка!"); // нужно её исправить
+            Debug.Log(ex);
         }
     }
 }

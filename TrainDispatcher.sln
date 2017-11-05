@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2017
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrainDispatcher", "TrainDispatcher.csproj", "{EF3F40D7-F1CD-B98F-3855-43B6898EEDEA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrainDispatcher.Editor", "TrainDispatcher.Editor.csproj", "{7B082B9D-9495-7BC5-275D-AA95D91F1060}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EF3F40D7-F1CD-B98F-3855-43B6898EEDEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF3F40D7-F1CD-B98F-3855-43B6898EEDEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF3F40D7-F1CD-B98F-3855-43B6898EEDEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF3F40D7-F1CD-B98F-3855-43B6898EEDEA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B082B9D-9495-7BC5-275D-AA95D91F1060}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B082B9D-9495-7BC5-275D-AA95D91F1060}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B082B9D-9495-7BC5-275D-AA95D91F1060}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B082B9D-9495-7BC5-275D-AA95D91F1060}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
