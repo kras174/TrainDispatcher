@@ -14,12 +14,12 @@ public class TrafficLight : MonoBehaviour {
         set { _lightHandler = value; }
     }
 
-    private void Awake()
+    void Awake()
     {
         render = gameObject.GetComponent<Renderer>();
     }
 
-    private void Update()
+    void Update()
     {
         if (LightHandler == 0) render.material.color = Color.green;
         else render.material.color = Color.red;

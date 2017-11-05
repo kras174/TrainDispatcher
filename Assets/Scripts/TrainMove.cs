@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -10,33 +8,30 @@ public class TrainMove : MonoBehaviour
 
     public float functionState = 0;
 
-    private Transform wayPoints;
+    private Transform _wayPoints;
     private GameObject _currTrafficLight;
-    private GameObject _currentWayPoint;
+    private Transform _currentWayPoint;
     private int _currTraficLightSignal;
     private int _randomWayPoint;
 
-    public int CurWayPoint;
+    public int curWayPoint;
+    public int curSpawnPoint;
 
     private Renderer render;
+    private Transform _spawnPoints;
 
     void Awake()
     {
-        wayPoints = GameObject.FindGameObjectWithTag("WayPoints").transform;
-        _randomWayPoint = UnityEngine.Random.Range(1, 4);
-        CurWayPoint = _randomWayPoint;
-
         functionState = 0;
         render = gameObject.GetComponent<Renderer>();
 
         agent = GetComponent<NavMeshAgent>();
 
-        _currentWayPoint = wayPoints.Find("WayPoint" + _randomWayPoint).gameObject;
-        agent.destination = _currentWayPoint.transform.position;
-        
+        agent.destination = SetDestinationWayPoint().position;
+
     }
 
-    private void Update()
+    void Update()
     {
         if (_currTrafficLight)
             functionState = _currTrafficLight.GetComponent<TrafficLight>().LightHandler;
@@ -44,16 +39,16 @@ public class TrainMove : MonoBehaviour
         if (functionState == 0)
         {
             agent.isStopped = false;
-            //agent.destination = wayPoint.transform.position;
         }
 
         if (functionState == 1)
         {
             agent.isStopped = true;
         }
+
     }
 
-    private void OnTriggerEnter(Collider collider)
+    void OnTriggerEnter(Collider collider)
     {
         if (collider.tag == "TrafficLight")
         {
@@ -61,23 +56,29 @@ public class TrainMove : MonoBehaviour
             _currTraficLightSignal = _currTrafficLight.GetComponent<TrafficLight>().LightHandler;
             functionState = _currTraficLightSignal;
         }
-        if (collider.tag == "Platform")
+        if (collider.tag == "SpawnPoint")
         {
-            
+            if (GetComponent<TrainClick>().trainState == 1)
+            {
+                Destroy(gameObject);
+            }
         }
 
         if (collider.tag == "Train")
         {
+            functionState = 1;
             render.material.color = Color.red;
+            GetComponent<TrainClick>().trainState = 3;
         }
 
-        if (collider.gameObject == _currentWayPoint)
+        if (collider.tag == "WayPoint")
         {
             render.material.color = Color.green;
+            GetComponent<TrainClick>().trainState = 2;
         }
     }
 
-    private void OnTriggerExit(Collider collider)
+    void OnTriggerExit(Collider collider)
     {
         try
         {
@@ -89,8 +90,34 @@ public class TrainMove : MonoBehaviour
         }
         catch (Exception ex)
         {
-            Debug.Log("Эта грёбанная ошибка!"); // нужно её исправить
-            Debug.Log(ex);
+            //Debug.Log("Эта грёбанная ошибка!"); // нужно её исправить
+            //Debug.Log(ex);
         }
+    }
+
+    Transform SetDestinationWayPoint()
+    {
+        _wayPoints = GameObject.FindGameObjectWithTag("WayPoints").transform;
+        _randomWayPoint = UnityEngine.Random.Range(1, 4);
+        curWayPoint = _randomWayPoint;
+
+        return _wayPoints.Find("WayPoint" + _randomWayPoint).gameObject.transform;
+
+    }
+
+    Transform SetDestinationSpawnPoint()
+    {
+        _spawnPoints = GameObject.FindGameObjectWithTag("SpawnPoints").transform;
+        curSpawnPoint = UnityEngine.Random.Range(1, 5);
+        Debug.Log(curSpawnPoint);
+        return _spawnPoints.Find("SpawnPoint" + curSpawnPoint).gameObject.transform;
+
+    }
+
+    public void DepartTrain()
+    {
+        render.material.color = Color.grey;
+        functionState = 0;
+        agent.destination = SetDestinationSpawnPoint().position;
     }
 }
